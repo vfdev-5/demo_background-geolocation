@@ -1,0 +1,46 @@
+<ion-navbar *navbar>
+  <ion-title>
+    <h3>BG GeoLocation</h3>
+  </ion-title>
+</ion-navbar>
+
+<ion-content padding class="page">
+
+  <div id="map" data-tap-disabled="true"></div>
+
+</ion-content>
+
+<ion-footer-bar class="bar-dark">
+
+  <ion-item>
+    <button (click)="onClickHome()">
+      <ion-icon name="locate"></ion-icon>
+    </button>
+    <button outline
+            (click)="onClickReset()">
+      Reset
+    </button>
+    <button [color]="pace.color" outline
+          (click)="onClickChangePace()">
+      {{pace.text}}
+    </button>
+    <button [color]="toggle.color" outline
+            (click)="onClickToogleEnabled()">
+      {{toggle.text}}
+    </button>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Collect</ion-label>
+    <ion-toggle disabled checked="false"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-select [(ngModel)]="provider">
+      <ion-option value="df">ANDROID_DISTANCE_FILTER</ion-option>
+      <ion-option value="fl">ANDROID_FUSED_LOCATION</ion-option>
+    </ion-select>
+    <ion-label>Provider</ion-label>
+  </ion-item>
+
+</ion-footer-bar>
