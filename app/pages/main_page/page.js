@@ -1,4 +1,4 @@
-import {Page, NavController, Toast, Events} from 'ionic-angular';
+import {Page, NavController, Toast, Events, Platform} from 'ionic-angular';
 import {BackgroundGeolocation, Geolocation} from 'ionic-native';
 import {Dialogs} from 'ionic-native';
 
@@ -8,13 +8,12 @@ let TIMEOUT = 3;
 
 @Page({
   templateUrl: 'build/pages/main_page/page.html'
-
 })
 export class MainPage {
   static get parameters() {
-    return [[NavController], [Events]];
+    return [[NavController], [Events], [Platform]];
   }
-  constructor(nav, events) {
+  constructor(nav, events, platform) {
     this.map = null;
     this.nav = nav;
     this.events = events;
@@ -23,6 +22,8 @@ export class MainPage {
       enableHighAccuracy: true,
       maximumAge: 30000
     }
+
+    this.is_not_android = !platform.is('android');
 
     this.location = undefined;
     this.path = undefined;
@@ -189,7 +190,7 @@ export class MainPage {
     console.log("!!!DEMO : setCurrentLocation, location=" + location);
 
     if (!this.location) {
-      this.location = new new google.maps.Marker({
+      this.location = new google.maps.Marker({
                 map: this.map,
                 icon: {
                     path: google.maps.SymbolPath.CIRCLE,
@@ -246,10 +247,23 @@ export class MainPage {
     // Add breadcrumb to current Polyline path.
     this.path.getPath().push(latlng);
     this.previousLocation = location;
-
   }
 
+  onGetLocations() {
 
+    BackgroundGeolocation.getLocations()
+      .then(
+        (res) => {
+          console.log("On Get Locations : " + res);
+
+        }
+      )
+      .catch(
+        (err) => {
+          console.error("On Get Locations : error = " + error);
+        }
+      );
+  }
 
 
 

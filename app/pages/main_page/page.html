@@ -8,6 +8,21 @@
 
   <div id="map" data-tap-disabled="true"></div>
 
+
+  <ion-item>
+    <h2>Locations</h2>
+  </ion-item>
+
+  <ion-list>
+
+    <ion-item *ngFor="#item of locations">
+      {{item.position.latitude}}, {{item.position.longitude}}
+    </ion-item>
+
+  </ion-list>
+
+
+
 </ion-content>
 
 <ion-footer-bar class="bar-dark">
@@ -20,13 +35,23 @@
             (click)="onClickReset()">
       Reset
     </button>
-    <button [color]="pace.color" outline
+
+    <button outline
+          *ngIf="is_not_android"
+          [color]="pace.color"
           (click)="onClickChangePace()">
       {{pace.text}}
     </button>
+
     <button [color]="toggle.color" outline
             (click)="onClickToogleEnabled()">
       {{toggle.text}}
+    </button>
+
+    <button outline
+      *ngIf="!is_not_android"
+      (click)="onGetLocations()">
+      Get Locations
     </button>
   </ion-item>
 
